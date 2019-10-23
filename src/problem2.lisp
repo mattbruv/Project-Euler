@@ -6,8 +6,6 @@
 ;; By considering the terms in the Fibonacci sequence whose values do not exceed four million,
 ;; find the sum of the even-valued terms.
 
-(defun problem2 () (fib 1 1 0))
-
 (defun fib (n1 n2 result)
   (let ((next (+ n1 n2)))
     (if (> next 4000000)
@@ -15,3 +13,7 @@
         (if (= 0 (mod next 2))
             (fib n2 next (+ result next))
             (fib n2 next result)))))
+
+(defun problem2 () (fib 1 1 0))
+
+;; 4613732
