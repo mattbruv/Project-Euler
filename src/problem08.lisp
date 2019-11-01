@@ -61,6 +61,6 @@
                 (product (+ 1 index) max)))
         max))
 
-(defun problem8 () (product 0 0))
+(defun problem08 () (product 0 0))
 
 ;; 23514624000

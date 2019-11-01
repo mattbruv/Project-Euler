@@ -19,6 +19,6 @@
                       (defparameter *top-palindrome* product)
                       NIL)))))
 
-(defun problem4 () (progn (nested-loop) *top-palindrome*))
+(defun problem04 () (progn (nested-loop) *top-palindrome*))
 
 ;; 906609

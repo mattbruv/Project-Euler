@@ -16,6 +16,6 @@
         num
         (smolest (+ 1 num))))
 
-(defun problem5 () (smolest 20))
+(defun problem05 () (smolest 20))
 
 ;; 232792560

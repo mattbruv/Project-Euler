@@ -18,7 +18,7 @@
                (gen-primes (+ 1 start) amount))
         NIL))
 
-(defun problem7 ()
+(defun problem07 ()
     (progn (gen-primes 2 10001)
            (car *primes*)))
 

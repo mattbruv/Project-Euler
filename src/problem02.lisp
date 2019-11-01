@@ -14,6 +14,6 @@
             (fib n2 next (+ result next))
             (fib n2 next result)))))
 
-(defun problem2 () (fib 1 1 0))
+(defun problem02 () (fib 1 1 0))
 
 ;; 4613732

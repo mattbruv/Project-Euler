@@ -11,6 +11,6 @@
         (factor n (+ f 1) result))
     result))
 
-(defun problem3 () (first (factor 600851475143)))
+(defun problem03 () (first (factor 600851475143)))
 
 ;; 6857

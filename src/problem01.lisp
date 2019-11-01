@@ -9,7 +9,7 @@
 
 (defun range (number) (loop :for n :below number :collect n))
 
-(defun problem1 ()
+(defun problem01 ()
   (reduce '+ (remove-if-not 'multiple? (range 1000))))
 
 ;; 233168

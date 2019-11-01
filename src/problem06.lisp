@@ -19,6 +19,6 @@
     (let ((sum (reduce '+ nums)))
         (* sum sum)))
 
-(defun problem6 () (- (square-of-sum 1-100) (sum-of-squares 1-100)))
+(defun problem06 () (- (square-of-sum 1-100) (sum-of-squares 1-100)))
 
 ;; 25164150
