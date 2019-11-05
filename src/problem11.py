@@ -71,6 +71,7 @@ for row in range(0, 20):
         if maxN > maxProduct:
             maxProduct = maxN
 
-print(maxProduct)
+def problem11():
+    print(maxProduct)
 
 # 70600674

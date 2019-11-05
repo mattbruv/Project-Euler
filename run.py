@@ -6,16 +6,15 @@ from src import problem{}
 problem{}.problem{}()
 """
 
-# Runs a problem number and gives execution time
+# Runs a problem number and returns execution time
 def run(p):
     start = time.time() 
     print('START PROBLEM', p)
     try:
         exec(code.replace('{}', p))
-    except:
-        print('!!! EXCEPTION IN PROBLEM', p, '!!!')
-    finally:
-        return round(time.time() - start, 5)
+    except KeyboardInterrupt:
+        print('!!! CANCELLED EXECUTION AFTER ', p, 'SECONDS !!!')
+    return round(time.time() - start, 5)
 
 if __name__ == "__main__":
     try:

@@ -24,7 +24,8 @@ for i in range(2, int(1e6)):
     if (sum(l) == i):
         sums.append(i)
 
-print(sums)
-print(sum(sums))
+def problem30():
+    print(sums)
+    print(sum(sums))
 
 # 443839

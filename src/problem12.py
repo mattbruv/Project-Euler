@@ -32,14 +32,15 @@ def numFactors(num):
                 factors += 1
     return factors
 
-n = 1
-while True:
-    tri = triangleNumber(n)
-    facs = numFactors(tri)
-    if facs > 500:
-        print(n)
-        print(tri)
-        break
-    n += 1
+def problem12():
+    n = 1
+    while True:
+        tri = triangleNumber(n)
+        facs = numFactors(tri)
+        if facs > 500:
+            print(n)
+            print(tri)
+            break
+        n += 1
 
 # 76576500

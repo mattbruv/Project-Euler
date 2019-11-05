@@ -83,6 +83,7 @@ def sumLetterRange(start, finish):
         string += numToWord(i)
     return len(string)
 
-print(sumLetterRange(1, 1000))
+def problem17():
+    print(sumLetterRange(1, 1000))
 
 # 21124

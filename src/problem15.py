@@ -10,4 +10,5 @@ def nChoosek(n, k):
     bot = math.factorial(k) * math.factorial(n - k)
     return top // bot
 
-print(nChoosek(40, 20))
+def problem15():
+    print(nChoosek(40, 20))

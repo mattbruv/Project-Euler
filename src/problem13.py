@@ -104,11 +104,12 @@ numbersString = """
 
 nums = [int(n) for n in numbersString.strip().splitlines()]
 
-total = 0
-for n in nums:
-    total += n
+def problem13():
+    total = 0
+    for n in nums:
+        total += n
 
-print(total)
-print(str(total)[:10])
+    print(total)
+    print(str(total)[:10])
 
 # 5537376230

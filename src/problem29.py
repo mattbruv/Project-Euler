@@ -24,6 +24,7 @@ def terms(aMax, bMax):
     l.sort()
     return l
 
-print(len(terms(100, 100)))
+def problem29():
+    print(len(terms(100, 100)))
 
 # 9183

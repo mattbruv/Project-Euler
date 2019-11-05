@@ -25,16 +25,17 @@ def genSeq(n):
     result.append(n)
     return result
 
-maxLen = 0
-maxSeq = []
+def problem14():
+    maxLen = 0
+    maxSeq = []
 
-for i in range(1, int(1e6)):
-    iSeq = genSeq(i)
-    iLen = len(iSeq)
-    if iLen > maxLen:
-        maxLen = iLen
-        maxSeq = iSeq
+    for i in range(1, int(1e6)):
+        iSeq = genSeq(i)
+        iLen = len(iSeq)
+        if iLen > maxLen:
+            maxLen = iLen
+            maxSeq = iSeq
 
-print(maxSeq)
-print(maxLen)
-print(maxSeq[0])
+    print(maxSeq)
+    print(maxLen)
+    print(maxSeq[0])

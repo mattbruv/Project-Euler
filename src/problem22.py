@@ -33,6 +33,7 @@ for name in names:
     total += nameScore(index, name)
     index += 1
 
-print(total)
+def problem22():
+    print(total)
 
 # 871198282

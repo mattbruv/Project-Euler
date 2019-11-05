@@ -28,7 +28,8 @@ def getAmicables(min, max):
             l.append(a)
     return l
 
-a = getAmicables(2, int(1e4))
-print(sum(a))
+def problem21():
+    a = getAmicables(2, int(1e4))
+    print(sum(a))
 
 # 31626

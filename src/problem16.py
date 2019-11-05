@@ -9,4 +9,5 @@ total = 0
 for c in s:
     total += int(c)
 
-print(total)
+def problem16():
+    print(total)

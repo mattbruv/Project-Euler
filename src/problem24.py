@@ -15,6 +15,8 @@ from itertools import permutations
 
 l = list(permutations(range(0, 10)))
 mil = ''.join(map(str, l[int(1e6) - 1]))
-print(mil)
+
+def problem24():
+    print(mil)
 
 # 2783915460

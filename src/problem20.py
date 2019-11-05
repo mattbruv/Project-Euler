@@ -13,6 +13,7 @@ total = 0
 for n in str(math.factorial(100)):
     total += int(n)
 
-print(total)
+def problem20():
+    print(total)
 
 # 648
