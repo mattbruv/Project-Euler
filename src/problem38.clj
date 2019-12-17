@@ -17,11 +17,11 @@
 (defn toInt [col] (Integer/parseInt (apply str col)))
 
 (defn problem38[]
-  (->> (range 1 1000000)
+  (->> (range 1 10000)
        (map #(pan % 1 []))
        (filter pan?)
        (map toInt)
        (apply max)))
 
 ; 932718654
-; Elapsed time: 11451.150653 msecs
+; Elapsed time: 140.042009 msecs
