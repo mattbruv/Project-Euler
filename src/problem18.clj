@@ -1,4 +1,4 @@
-
+(ns src.problem18)
 
 (def ex1
 "3
@@ -30,13 +30,19 @@
        (map #(clojure.string/split % #" "))
        (map toInt)))
 
-(defn search [t layer offset]
-  ; (print (nth t layer))
-  (if (= layer (count t))
-      0
-      (let [candidates (take 2 (drop offset (nth t layer)))]
-        (let [maxN (apply max candidates)]
-            (print maxN)))))
+(defn flatten [t]
+  (if (= 1 (count t)) (-> t first first) 
+    (let [top (nth t (- (count t) 2))
+          bottom (nth t (- (count t) 1))
+          next-bot (simplify top bottom)
+          next-tri (concat (take (- (count t) 2) t) (cons next-bot '()))]
+         (flatten next-tri))))
 
-(def foo (tri ex1))
-(def bar (search (tri ex1) 0 0))
+(defn simplify [top bottom]
+  (map #(maximize (nth top %) bottom %) (range 0 (count top))))
+
+(defn maximize [n bottom index]
+  (let [opts (take 2 (drop index bottom))]
+    (+ n (apply max opts))))
+
+(defn problem18 [] (flatten (tri ex2)))
