@@ -52,3 +52,6 @@ def problem26():
             longest = test
             index = i
     print(index)
+
+# 983
+# 0:00:00.796198 ELAPSED
