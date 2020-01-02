@@ -1,7 +1,6 @@
 import math 
 
 def divisors(n):
-    #return [d for d in range(1, int(math.sqrt(n)) + 1) if n % d == 0]
     fs = []
     sroot = int(math.sqrt(n))
     for i in range(1, sroot + 1):
