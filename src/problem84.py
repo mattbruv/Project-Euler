@@ -1,4 +1,4 @@
-from random import randrange
+from random import randrange, shuffle
 
 # board has squares from 00 -> 39
 # wraps around at 39
@@ -18,54 +18,150 @@ this needs to be cycled as if it were played ingame.
 # and GO (3.09%) = Square 00.
 # So these three most popular are the six-digit modal string: 102400.
 
-diceSides = 6
+squareNames = [
+    "GO", "A1", "CC1", "A2", "T1", "R1", "B1", "CH1", "B2", "B3",
+    "JAIL", "C1", "U1", "C2", "C3", "R2", "D1", "CC2", "D2", "D3",
+    "FP", "E1", "CH2", "E2", "E3", "R3", "F1", "F2", "U2", "F3",
+    "G2J", "G1", "G2", "CC3", "G3", "R4", "CH3", "H1", "T2", "H2"
+]
 
-GO = 0
-JAIL = 10
-C1 = 11
-E3 = 24
-H2 = 39
-R1 = 5
+board = list(zip(squareNames, range(40))) 
 
-def processSquare(nextSquare):
-    result = nextSquare
-    if nextSquare == 30:
-        result = 10
-    return result
+ADVANCE_TO_GO = -1
+GO_TO_JAIL = -2
+GO_TO_NEXT_R = -3
+GO_TO_NEXT_U = -4
+GO_BACK_3_SQUARES = -5
+DO_NOTHING = -6
 
-def communityChest(squareAt):
-    squares = [0, 10] 
-    return 0
+def index(name):
+    for sq, idx in board:
+        if name.upper() == sq:
+            return idx
 
-def chance(squareAt):
-    BACK = (squareAt - 3) % 40
-    squares = [GO, JAIL, C1, E3, H2, R1, BACK]
-    return 0
+def name(index):
+    for sq, idx in board:
+        if index == idx:
+            return sq
 
-def roll():
-    return (randrange(1, diceSides + 1), randrange(1, diceSides + 1))
+# Initialize community chest cards
+communityChestCards = [DO_NOTHING] * 16
+communityChestCards[0] = ADVANCE_TO_GO
+communityChestCards[1] = GO_TO_JAIL
+shuffle(communityChestCards)
+
+# Initialize chance cards
+chanceCards = [DO_NOTHING] * 16
+chanceCards[0] = ADVANCE_TO_GO
+chanceCards[1] = GO_TO_JAIL
+chanceCards[2] = index("C1")
+chanceCards[3] = index("E3")
+chanceCards[4] = index("H2")
+chanceCards[5] = index("R1")
+chanceCards[6] = GO_TO_NEXT_R
+chanceCards[7] = GO_TO_NEXT_R
+chanceCards[8] = GO_TO_NEXT_U
+chanceCards[9] = GO_BACK_3_SQUARES
+shuffle(chanceCards)
+
+def nextSquare(current, roll):
+    nextSq = (current + roll) % 40
+
+    # if we land on Go To Jail
+    if nextSq == index('G2J'):
+        nextSq = index('JAIL')
+
+    currentName = name(nextSq)
+
+    # if our next square is a community chest, draw a card
+    if 'CC' in currentName:
+        nextSq = communityChest(nextSq)
+    # if next square is chance, draw card
+    if 'CH' in currentName:
+        nextSq = chance(nextSq)
+
+    return nextSq
+
+def squareDict():
+    s = {}
+    for sq, _ in board:
+        s[sq] = 0
+    return s
+
+def rollDice(sides):
+    return (randrange(1, sides + 1), randrange(1, sides + 1))
+
+def communityChest(currentSquare):
+    nextSquare = currentSquare
+    nextCard = communityChestCards.pop(0)
+    if nextCard == ADVANCE_TO_GO:
+        nextSquare = index("GO")
+    if nextCard == GO_TO_JAIL:
+        nextSquare = index("JAIL")
+    communityChestCards.append(nextCard)
+    return nextSquare
+
+def nextOfType(squareType, current):
+    ss = list(filter(lambda x: squareType in x[0], board))
+    lowest = min(list(map(lambda x: x[1], ss)))
+    nexts = list(filter(lambda x: x[1] > current, ss))
+    nextSquare = current
+    if len(nexts) == 0:
+        nextSquare = lowest
+    else:
+        nextSquare = nexts[0][1]
+    return nextSquare
+
+def chance(currentSquare):
+    nextSquare = currentSquare
+    nextCard = chanceCards.pop(0)
+    if nextCard == ADVANCE_TO_GO:
+        nextSquare = index("GO")
+    if nextCard == GO_TO_JAIL:
+        nextSquare = index("JAIL")
+    if nextCard == GO_BACK_3_SQUARES:
+        nextSquare = (nextSquare - 3) % 40
+        title = name(nextSquare)
+        if 'CC' in title:
+            nextSquare = communityChest(nextSquare)
+        if 'CH' in title:
+            nextSquare = chance(nextSquare)
+    if nextCard >= 0: # if we drew a normal GOTO
+        nextSquare = nextCard
+    if nextCard == GO_TO_NEXT_R:
+        nextSquare = nextOfType("R", nextSquare)
+    if nextCard == GO_TO_NEXT_U:
+        nextSquare = nextOfType("U", nextSquare)
+    chanceCards.append(nextCard)
+    return nextSquare
+
+def simulateGame(diceSides, steps):
+    counts = squareDict()
+    current = index("GO")
+    doubles = 0
+
+    for i in range(steps):
+        rollA, rollB = rollDice(diceSides)
+        if rollA == rollB:
+            doubles += 1
+        if doubles >= 3:
+            current = index('JAIL')
+            doubles = 0
+        else:
+            current = nextSquare(current, rollA + rollB)
+        counts[name(current)] += 1
+
+    return counts
+
+def topSquares(counts):
+    names = sorted(counts, key=counts.get, reverse=True)
+    amounts = list(map(lambda x: counts[x], names))
+    return list(zip(names, amounts))
 
 def problem84():
-    turns = int(1e5)
-    visits = {}
-
-    for i in range(0, 40):
-        visits[i] = 0
-
-    currentSquare = 0 # start on GO
-    consecutiveDoubles = 0
-
-    for i in range(0, turns):
-        d1, d2 = roll()
-        if d1 == d2: # we rolled doubles
-            consecutiveDoubles += 1
-            if consecutiveDoubles == 3:
-                consecutiveDoubles = 0
-                currentSquare = 10
-        else:
-            nextSquare = ((d1 + d2 + currentSquare) % 40)
-            currentSquare = processSquare(nextSquare)
-        visits[currentSquare] += 1
-
-    print('monopoly odds')
-    print(visits)
+    ans = simulateGame(4, 100000)
+    ts = topSquares(ans)
+    foo = ts
+    a = list(map(lambda x: index(x[0]), foo))
+    print(ts)
+    print(a)
