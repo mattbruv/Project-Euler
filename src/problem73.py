@@ -1,5 +1,6 @@
 from fractions import Fraction
-from src.helpers.division import GCD
+# from src.helpers.division import GCD
+from math import gcd
 
 def problem73():
     total = 0
@@ -24,11 +25,12 @@ def problem73():
             if f <= lowerBound:
                 #print(f, 'lower than', lowerBound)
                 break
-            if GCD(n, d) == 1:
+            if gcd(n, d) == 1:
                 #print(f)
                 total += 1
             n -= 1
     print(total)
 
 # 7295372
-# 0:06:42.664031 ELAPSED
+# 0:06:42.664031 ELAPSED (with custom GCD code)
+# 0:01:33.749362 ELAPSED (with python GCD code)
