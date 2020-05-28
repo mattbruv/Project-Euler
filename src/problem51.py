@@ -1,6 +1,72 @@
 from src.helpers.prime import isPrime, primeFactors
 from itertools import permutations
 
+nHash = {}
+
+def getHash(pattern, number):
+    s = str(number)
+    h = ""
+    i = -1
+    for p in pattern:
+        i += 1
+        if p == 'n':
+            h += s[i]
+        else:
+            h += '*'
+    return h
+
+def unique(pattern, number):
+    s = str(number)
+    l = []
+    i = -1
+    for p in pattern:
+        i += 1
+        if p == '*':
+            l.append(s[i])
+    return len(set(l))
+
+
+def test(n):
+    string = str(n)
+    size = len(string)
+    for i in range(1, size):
+        #print(i)
+        sub = ("n" * i) + (size - i) * '*'
+        #print(sub)
+        perms = set(list(permutations(sub)))
+        for pattern in perms:
+            if unique(pattern, n) == 1:
+                hStr = getHash(pattern, n)
+                #print(hStr)
+                if hStr not in nHash:
+                    nHash[hStr] = [n]
+                else:
+                    nHash[hStr].append(n)
+                if len(nHash[hStr]) == 8:
+                    print(hStr)
+                    return nHash[hStr]
+    return False
+
+
+def problem51():
+    i = 0
+    while True:
+        i += 1
+        if i % int(1e5) == 0:
+            print(i)
+        if not isPrime(i):
+            continue
+        ans = test(i)
+        if ans != False:
+            print(ans)
+            break
+
+# *2*3*3
+# [121313, 222323, 323333, 424343, 525353, 626363, 828383, 929393]
+# 0:00:58.948372 ELAPSED
+
+"""
+
 print('calculating primes...')
 primes = filter(isPrime, range(1, int(1e4)))
 print('done finding primes')
@@ -30,8 +96,7 @@ def problem51():
             print(pattern)
             res = map(lambda x: replace(x, pattern), testPrimes)
             print(list(res))
-
-
+"""
 
 """
 spent a while calculating this algorithm...
