@@ -9,3 +9,6 @@ def problem179():
         if n1 == n2:
             total += 1
     print(total)
+
+# 986262
+# 1:49:31.489868 ELAPSED
