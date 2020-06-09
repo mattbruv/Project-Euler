@@ -64,3 +64,6 @@ def problem060():
     
     for a in answers:
         print(a, sum(a))
+
+# {8389, 5701, 6733, 5197, 13} 26033
+# 0:01:52.054409 ELAPSED
