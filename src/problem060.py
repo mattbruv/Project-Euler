@@ -1,0 +1,50 @@
+from src.helpers.prime import isPrime, primeFactors
+from itertools import combinations, permutations
+
+primes = list(filter(isPrime, range(2, 1000)))
+
+def p(n):
+    print(primeFactors(n))
+    print(isPrime(n))
+
+def canConcat(ps):
+    for a, b in permutations(ps, 2):
+        if not isPrime(int(str(a) + str(b))):
+            return False
+        #else:
+        #    print(a, b, str(a) + str(b))
+    return True
+
+def problem060():
+    #concats = list(filter(canConcat, combinations(primes, 2)))
+    #print(concats)
+    #print(canConcat((3, 7, 109, 673)))
+    #print(len(list(combinations(primes, 2))))
+    #print(len(concats))
+    combos = {}
+    for a, b in filter(canConcat, combinations(primes, 2)):
+        if a not in combos:
+            combos[a] = set()
+        if b not in combos:
+            combos[b] = set()
+        combos[a].add(b)
+        combos[b].add(a)
+
+    answers = []
+    
+    for c in combos:
+        print("testing", c, combos[c])
+        setTest = combos[c]
+        setTest.add(c)
+        n = combinations(setTest, 4)
+        for x in n:
+            if c not in x:
+                continue
+            #print(x)
+            if canConcat(x):
+                if set(x) not in answers:
+                    answers.append(set(x))
+                print(x)
+    
+    for a in answers:
+        print(a, sum(a))
