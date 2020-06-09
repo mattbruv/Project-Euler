@@ -1,7 +1,7 @@
 from src.helpers.prime import isPrime, primeFactors
 from itertools import combinations, permutations
 
-primes = list(filter(isPrime, range(2, 1000)))
+primes = list(filter(isPrime, range(2, 10000)))
 
 def p(n):
     print(primeFactors(n))
@@ -34,8 +34,23 @@ def problem060():
     
     for c in sorted(map(int, combos.keys())):
         print("testing", c, combos[c])
-        setTest = combos[c]
-        setTest.add(c)
+        #setTest = combos[c]
+        #setTest.add(c)
+        a = set(combos[c])
+        for n in combos[c]:
+            b = set(combos[n])
+            #print(comp)
+            comp = a.intersection(b)
+            comp.add(c)
+            comp.add(n)
+            if len(comp) >= 5:
+                #print(c, n, a.intersection(b))
+                if canConcat(comp):
+                    print(comp, "\n")
+                    if comp not in answers:
+                        answers.append(comp)
+        #break
+        """
         n = combinations(setTest, 4)
         for x in n:
             if c not in x:
@@ -45,6 +60,7 @@ def problem060():
                 if set(x) not in answers:
                     answers.append(set(x))
                 print("\n", x, "\n")
+        """
     
     for a in answers:
         print(a, sum(a))
