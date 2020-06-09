@@ -32,7 +32,7 @@ def problem060():
 
     answers = []
     
-    for c in combos:
+    for c in sorted(map(int, combos.keys())):
         print("testing", c, combos[c])
         setTest = combos[c]
         setTest.add(c)
@@ -44,7 +44,7 @@ def problem060():
             if canConcat(x):
                 if set(x) not in answers:
                     answers.append(set(x))
-                print(x)
+                print("\n", x, "\n")
     
     for a in answers:
         print(a, sum(a))
