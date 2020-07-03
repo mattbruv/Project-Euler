@@ -1,7 +1,11 @@
 import math 
 
+def GCD(a, b):
+    a = set(divisors(a))
+    b = set(divisors(b))
+    return max(a.intersection(b))
+
 def divisors(n):
-    #return [d for d in range(1, int(math.sqrt(n)) + 1) if n % d == 0]
     fs = []
     sroot = int(math.sqrt(n))
     for i in range(1, sroot + 1):
