@@ -40,3 +40,9 @@ def primeFactors(n):
     if n > 1:
         factors.append(n)
     return factors
+
+def phi(n):
+    ls = list(set(primeFactors(n)))
+    for x in ls:
+        n *= (1 - (1 / x))
+    return int(n)
