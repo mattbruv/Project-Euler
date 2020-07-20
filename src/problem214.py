@@ -1,29 +1,32 @@
 from math import gcd
-import functools
-import operator
-from src.helpers.prime import isPrime, sieve, primeFactors
+from src.helpers.prime import totients, sieve, phi
 
-def totient(n):
-    factors = primeFactors(n)
-    phi = n * functools.reduce(operator.mul, [1 - 1 / p for p in set(factors)])
-    return int(phi)
+lookup = {}
 
 def chain(n):
-    i = n
-    count = 0
-    while True:
+    start = n
+    count = 1
+    if n == 1:
+        return 1
+    while n != 1:
         count += 1
-        if i == 1:
-            break
-        i = totient(i) 
+        n = phi(n)
+        if n in lookup:
+            return count + lookup[n]
+    lookup[start] = count - 1
     return count
 
 def problem214():
+    #primes = sieve(40_000_000)
+    #print('done generating primes')
+    limit = 40_000_000
+    chainLength = 25
+    #print(len(primes))
+    primes = sieve(limit)
     total = 0
-    primes = sieve(int(40e6))
     for p in primes:
-        print(p)
-        if chain(p) == 25:
-            print(p)
+        print(p, p / int(40e6) * 100)
+        if chain(p) == chainLength:
+            print(p, total)
             total += p
     print(total)
