@@ -1,4 +1,5 @@
-from src.helpers.prime import sieve
+from src.helpers.prime import sieve, isPrime
+from math import gcd
 
 """"
     
@@ -14,6 +15,22 @@ limit = int(1e6)
 primes = set(sieve(limit))
 
 def problem131():
+    b = 1 ** 3
+    a = 2 ** 3
+    diff = a - b
+    i = 3
+    count = 0
+    while diff < int(1e6):
+        if isPrime(diff):
+            count += 1
+        b = a
+        a = i ** 3
+        i += 1
+        diff = a - b
+    print(count)
+
+
+    return
 
     i = 2
     count = 0
@@ -36,8 +53,9 @@ def problem131():
                 if p in primes:
                     count += 1
                     ratio = n / i
-                    print("ratio =", n / i, "i =", i, "n =", n, "p =", p, eq, "=", cube, count, "below", i)
+                    print("i =", i, "n =", n, "p =", p, eq, "=", cube, count, "below", i)
                     #print(cube - n3 == p * n2)
+                    print("p + n", p + n, (p + n ** (1.0 / 3.0)), "\n")
             #print(p, eq, eq == cube)
         if i >= limit:
             break
