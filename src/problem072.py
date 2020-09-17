@@ -1,5 +1,9 @@
 from src.helpers.prime import phi, totients
 
+def chain(n):
+    print(n)
+    return n
+
 def problem072():
     total = 0
     for i in range(2, int(1e6) + 1):
